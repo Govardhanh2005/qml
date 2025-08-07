@@ -1,0 +1,24 @@
+name: Run ML Code
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          environment-file: environment.yml
+          activate-environment: classical-ml-env
+          auto-activate-base: false
+
+      - name: Run preprocessing
+        run: python classical_ml/ml_preprocessing.py
+
+      - name: Run ML models
+        run: python classical_ml/ml_models.py
